@@ -3,16 +3,32 @@ import logo from "./logo.svg";
 import "./App.css";
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      family: ["amber", "cora", "kinley", "scarlett"],
+      filtered: ""
+    };
+  }
+  filteredFamily(person) {
+    this.setState({ filtered: person });
+  }
   render() {
+    console.log(this.state);
+    let myFamily = this.state.family
+      .filter((element, index) => {
+        return element.includes(this.state.filtered);
+      })
+      .map((element, index) => {
+        return <h2 key={index}>{element}</h2>;
+      });
     return (
       <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
-        </div>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+        <input
+          onChange={e => this.filteredFamily(e.target.value)}
+          type="text"
+        />
+        {myFamily}
       </div>
     );
   }
